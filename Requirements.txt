@@ -1,0 +1,10 @@
+These are the few Requirements that you need to have before you can use the application.
+
+Flask
+numpy
+matplotlib
+scipy
+SpeechRecognition
+pyaudio
+
+Download all these libraries using "pip install ...."

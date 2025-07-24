@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribution Plotter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #plot {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Distribution Plotter</h1>
+    <!-- <p>Select a distribution or use speech recognition to plot the graph.</p> -->
+
+    <!-- <form id="distributionForm">
+        <label for="distribution">Select Distribution:</label>
+        <select id="distribution" name="distribution">
+            <option value="uniform">Uniform</option>
+            <option value="rayleigh">Rayleigh</option>
+            <option value="binomial">Binomial</option>
+            <option value="poisson">Poisson</option>
+            <option value="laplacian">Laplacian</option>
+            <option value="gaussian">Gaussian</option>
+        </select>
+        <button type="submit">Plot Graph</button>
+    </form> -->
+
+    <button onclick="listenAndPlot()">Use Speech Recognition</button>
+
+    <div id="plot">
+        <img id="plotImage" src="" alt="Distribution Plot" style="max-width: 100%; height: auto;">
+    </div>
+
+    <script>
+        const form = document.getElementById('distributionForm');
+        const plotImage = document.getElementById('plotImage');
+
+        // Handle form submission
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const distribution = document.getElementById('distribution').value;
+
+            const response = await fetch('/get_pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ distribution }),
+            });
+
+            const data = await response.json();
+            if (data.image) {
+                plotImage.src = `data:image/png;base64,${data.image}`;
+            } else {
+                alert(data.error || 'Failed to generate plot.');
+            }
+        });
+
+        // Handle speech recognition
+        async function listenAndPlot() {
+            const response = await fetch('/speech_to_pdf', {
+                method: 'GET',
+            });
+
+            const data = await response.json();
+            if (data.image) {
+                plotImage.src = `data:image/png;base64,${data.image}`;
+            } else {
+                alert(data.error || 'Failed to recognize distribution.');
+            }
+        }
+    </script>
+</body>
+</html>

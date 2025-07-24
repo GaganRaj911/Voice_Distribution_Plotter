@@ -19,21 +19,6 @@ Built using **Python**, **Flask**, **Matplotlib**, **SpeechRecognition**, and **
 -  **Web Interface**: Plots rendered and displayed on a simple web page.
 -  Plots styled using `matplotlib` and embedded as images.
 
----
-
-##  Project Structure
-
-Voice-Distribution-Plotter/
-├── app.py # Main Flask application
-├── Templates/
-│ └── index.html # Frontend HTML file
-├── Static/
-│ └── script.js
-│ └── style.css
-├── requirements.txt # Python dependencies
-└── README.md # Project documentation
-└── Demo.mp4
-
 ## Getting Started
 
 - Clone the Repository
